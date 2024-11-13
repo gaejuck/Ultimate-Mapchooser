@@ -947,7 +947,7 @@ stock bool:VoteMenuToAllWithFlags(Handle:menu, time, const String:flagstring[]="
 	if (strlen(flagstring) > 0)
 	{
 		new flags = ReadFlagString(flagstring);
-		decl clients[MAXPLAYERS+1];
+		decl clients[TF2_MAXPLAYERS+1];
 		new count = 0;
 		for (new i = 1; i <= MaxClients; i++)
 		{

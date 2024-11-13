@@ -26,6 +26,7 @@ along with this plugin.  If not, see <http://www.gnu.org/licenses/>.
 #define UMC_DEBUG 1
 #define AUTOUPDATE_ENABLE 0
 #define AUTOUPDATE_DEV 0
+#define TF2_MAXPLAYERS 101
 
 //SourceMod Malarky
 public SharedPlugin:__pl_umccore =

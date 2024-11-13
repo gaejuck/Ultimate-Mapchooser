@@ -76,7 +76,7 @@ new Handle:vote_catmem_arr = INVALID_HANDLE;
 new Handle:rtv_clients = INVALID_HANDLE;
 
 //Stores whether or not players have seen the long RTV message.
-new bool:rtv_message[MAXPLAYERS+1];
+new bool:rtv_message[TF2_MAXPLAYERS+1];
 
 //Keeps track of a delay before we are able to RTV.
 new Float:rtv_delaystart;
@@ -225,7 +225,7 @@ public OnPluginStart()
 		"sm_umc_rtv_minplayers",
 		"0",
 		"Number of players required before RTV will be enabled.",
-		0, true, 0.0, true, float(MAXPLAYERS)
+		0, true, 0.0, true, float(TF2_MAXPLAYERS)
 	);
 
 	cvar_rtv_delay = CreateConVar(
@@ -742,7 +742,7 @@ public StartRTV()
 		decl String:flags[64];
 		GetConVarString(cvar_voteflags, flags, sizeof(flags));
 
-		new clients[MAXPLAYERS+1];
+		new clients[TF2_MAXPLAYERS+1];
 		new numClients;
 		GetClientsWithFlags(flags, clients, sizeof(clients), numClients);
 
@@ -802,6 +802,15 @@ public UMC_OnNextmapSet(Handle:kv, const String:map[], const String:group[], con
 {
 	vote_completed = true;
 	rtv_inprogress = false;
+
+	char sMap[8];
+	GetCurrentMap(sMap, sizeof(sMap));
+	GetMapDisplayName(sMap, sMap, sizeof(sMap));
+	
+	if(!StrContains(sMap, "mvm_"))
+	{
+		ForceChangeInFive(map, "RTV");
+	}
 }
 
 //Called when UMC requests that the mapcycle should be reloaded.

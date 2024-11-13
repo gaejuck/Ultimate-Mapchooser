@@ -54,8 +54,8 @@ new Handle:umc_mapcycle = INVALID_HANDLE;
 new Handle:vote_mem_arr    = INVALID_HANDLE;
 new Handle:vote_catmem_arr = INVALID_HANDLE;
 
-new Handle:nom_menu_groups[MAXPLAYERS+1]    = { INVALID_HANDLE, ... };
-new Handle:nom_menu_nomgroups[MAXPLAYERS+1] = { INVALID_HANDLE, ... };
+new Handle:nom_menu_groups[TF2_MAXPLAYERS+1]    = { INVALID_HANDLE, ... };
+new Handle:nom_menu_nomgroups[TF2_MAXPLAYERS+1] = { INVALID_HANDLE, ... };
 //EACH INDEX OF THE ABOVE TWO ARRAYS CORRESPONDS TO A NOMINATION MENU FOR A PARTICULAR CLIENT.
 
 //Has a vote neem completed?

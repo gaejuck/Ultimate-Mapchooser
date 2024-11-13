@@ -101,6 +101,7 @@ new bool:vote_enabled;     //Are we able to run a vote? Means that the timer is 
 new bool:vote_roundend;    //Are we going to start a vote when this round is over?
 new bool:vote_completed;   //Has an end of map vote been completed?
 new bool:vote_failed;      //Did the vote fail due to no players?
+new bool:mvm_mission_end;
 
 //Keeps track of the time before the end-of-map vote starts.
 new Float:vote_delaystart;
@@ -362,7 +363,8 @@ public OnPluginStart()
 		HookEventEx("game_round_end",         Event_RoundEnd); //Hidden: Source, Neotokyo
 		HookEventEx("teamplay_win_panel",     Event_RoundEndTF2); //TF2
 		HookEventEx("arena_win_panel",        Event_RoundEndTF2); //TF2
-		HookEventEx("teamplay_restart_round", Event_RestartRound); //TF2  
+		HookEventEx("teamplay_restart_round", Event_RestartRound); //TF2
+		HookEventEx("mvm_mission_complete",   Event_MissionCompleteTF2); //TF2   
 		HookEventEx("cs_match_end_restart",   Event_RestartRound); //CS:GO
 		HookEventEx("round_win",              Event_RoundEnd); //Nuclear Dawn
 		HookEventEx("game_end",               Event_RoundEnd); //EmpiresMod
@@ -417,6 +419,7 @@ public OnConfigsExecuted()
 	vote_roundend = false;
 	vote_completed = false;
 	vote_failed = false;
+	mvm_mission_end = false;
 
 	//No timer is setup so delay is undefined
 	vote_delaystart = -1.0;
@@ -589,6 +592,13 @@ public Event_RoundEndTF2(Handle:evnt, const String:name[], bool:dontBroadcast)
 			}
 		}
 	}
+}
+
+public Event_MissionCompleteTF2(Event event, const char[] name, bool dontBroadcast)
+{
+	LogUMCMessage("MvM mission complete triggered end of map vote.");
+	StartMapVote();
+	mvm_mission_end = true;
 }
 
 //Called when a round ends in ZPS. 
@@ -1324,7 +1334,7 @@ public StartMapVote()
 	new String:flags[64];
 	GetConVarString(cvar_flags, flags, sizeof(flags));
 
-	new clients[MAXPLAYERS+1];
+	new clients[TF2_MAXPLAYERS+1];
 	new numClients;
 	GetClientsWithFlags(flags, clients, sizeof(clients), numClients);
 
@@ -1388,6 +1398,13 @@ public UMC_OnNextmapSet(Handle:kv, const String:map[], const String:group[], con
 	vote_completed = true;
 	vote_roundend = false;
 	vote_failed = false;
+
+	if(mvm_mission_end)
+	{
+		LogUMCMessage("MvM mission completed and next map set up.");
+		ForceChangeInFive(map, "MVM");
+		mvm_mission_end = false;
+	}
 }
 
 public UMC_OnVoteFailed()

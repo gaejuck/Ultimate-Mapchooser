@@ -594,7 +594,7 @@ ChangeToValidMap(Handle:cvar)
 				decl String:flags[64];
 				GetConVarString(cvar_flags, flags, sizeof(flags));
 
-				new clients[MAXPLAYERS+1];
+				new clients[TF2_MAXPLAYERS+1];
 				new numClients;
 				GetClientsWithFlags(flags, clients, sizeof(clients), numClients);
 

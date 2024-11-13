@@ -1073,7 +1073,7 @@ public Native_UMCStartVote(Handle:plugin, numParams)
 	new bool:nominationStrictness = bool:GetNativeCell(21);
 	new bool:allowDuplicates = bool:GetNativeCell(22);
 
-	new voteClients[MAXPLAYERS+1];
+	new voteClients[TF2_MAXPLAYERS+1];
 	GetNativeArray(23, voteClients, sizeof(voteClients));
 	new numClients = GetNativeCell(24);
 
@@ -1117,7 +1117,7 @@ public Native_UMCStartVote(Handle:plugin, numParams)
 	SetTrieString(voteManager, "stored_end_sound", endSound);
 	SetTrieString(voteManager, "stored_runoff_sound", (strlen(runoffSound) > 0) ? runoffSound : startSound);
 
-	new users[MAXPLAYERS+1];
+	new users[TF2_MAXPLAYERS+1];
 	ConvertClientsToUserIDs(voteClients, users, numClients);
 	SetTrieArray(voteManager, "stored_users", users, numClients);
 	SetTrieValue(voteManager, "stored_exclude", runExclusionCheck);
@@ -1480,7 +1480,7 @@ public Action:VM_MapVote(duration, Handle:vote_items, const clients[], numClient
 		LogUMCMessage("Adding Clients to Vote:");
 	}
 
-	decl clientArr[MAXPLAYERS+1];
+	decl clientArr[TF2_MAXPLAYERS+1];
 	new count = 0;
 	new client;
 
@@ -1540,7 +1540,7 @@ public Action:VM_GroupVote(duration, Handle:vote_items, const clients[], numClie
 		LogUMCMessage("Adding Clients to Vote:");
 	}
 
-	decl clientArr[MAXPLAYERS+1];
+	decl clientArr[TF2_MAXPLAYERS+1];
 	new count = 0;
 	new client;
 
@@ -3081,7 +3081,7 @@ DoRunoffVote(Handle:vM, Handle:response)
 	//Setup the timer if the menu was built successfully
 	if (runoffOptions != INVALID_HANDLE)
 	{
-		new clients[MAXPLAYERS+1];
+		new clients[TF2_MAXPLAYERS+1];
 		new numClients;
 
 		//Empty storage and add all clients if we're revoting completely.
@@ -3090,7 +3090,7 @@ DoRunoffVote(Handle:vM, Handle:response)
 			ClearArray(runoffClients);
 			EmptyStorage(vM);
 
-			new users[MAXPLAYERS+1];
+			new users[TF2_MAXPLAYERS+1];
 			GetTrieArray2(vM, "stored_users", users, sizeof(users), numClients);
 			ConvertUserIDsToClients(users, clients, numClients);
 
@@ -3152,7 +3152,7 @@ Handle:BuildRunoffOptions(Handle:vM, Handle:clientArray)
 	new num_items = GetArraySize(vote_storage);
 
 	//Array determining which clients have voted
-	new bool:clientVotes[MAXPLAYERS + 1];
+	new bool:clientVotes[TF2_MAXPLAYERS + 1];
 
 	for (new i = 0; i < num_items; i++)
 	{
@@ -3315,7 +3315,7 @@ public Action:Handle_RunoffVoteTimer(Handle:timer, Handle:datapack)
 
 	new Handle:options = Handle:ReadPackCell(datapack);
 	new Handle:voteClients = Handle:ReadPackCell(datapack);
-	new clients[MAXPLAYERS+1];
+	new clients[TF2_MAXPLAYERS+1];
 	new numClients = GetArraySize(voteClients);
 	ConvertAdtArray(voteClients, clients, sizeof(clients));
 
@@ -3738,9 +3738,9 @@ public Action:Handle_TieredVoteTimer(Handle:timer, Handle:pack)
 		decl String:stored_start_sound[PLATFORM_MAX_PATH];
 		GetTrieString(vM, "stored_start_sound", stored_start_sound, sizeof(stored_start_sound));
 
-		new users[MAXPLAYERS+1];
+		new users[TF2_MAXPLAYERS+1];
 		new numClients;
-		new clients[MAXPLAYERS+1];
+		new clients[TF2_MAXPLAYERS+1];
 		GetTrieArray2(vM, "stored_users", users, sizeof(users), numClients);
 		ConvertUserIDsToClients(users, clients, numClients);
 

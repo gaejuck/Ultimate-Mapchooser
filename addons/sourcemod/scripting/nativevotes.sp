@@ -108,8 +108,8 @@ int g_VoteTime;
 int g_VoteFlags;
 float g_fStartTime;
 int g_TimeLeft;
-int g_ClientVotes[MAXPLAYERS+1];
-bool g_bRevoting[MAXPLAYERS+1];
+int g_ClientVotes[TF2_MAXPLAYERS+1];
+bool g_bRevoting[TF2_MAXPLAYERS+1];
 char g_LeaderList[1024];
 
 // Map list stuffs
@@ -121,7 +121,7 @@ char g_LeaderList[1024];
 Handle g_OverrideMaps;
 StringMap g_MapOverrides;
 bool g_OverridesSet;
-bool g_OverrideNextCallVote[MAXPLAYERS + 1];
+bool g_OverrideNextCallVote[TF2_MAXPLAYERS + 1];
 
 enum CallVoteForwards
 {

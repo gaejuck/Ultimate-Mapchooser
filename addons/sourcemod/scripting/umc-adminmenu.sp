@@ -126,13 +126,13 @@ new Handle:admin_menu = INVALID_HANDLE;
 //new TopMenuObject:umc_menu;
 
 //Tries to store menu selections / build options.
-new Handle:menu_tries[MAXPLAYERS];
+new Handle:menu_tries[TF2_MAXPLAYERS];
 
 //Flags for Chat Triggers
-new bool:runoff_trigger[MAXPLAYERS];
-new bool:runoff_menu_trigger[MAXPLAYERS];
-new bool:threshold_trigger[MAXPLAYERS];
-new bool:threshold_menu_trigger[MAXPLAYERS];
+new bool:runoff_trigger[TF2_MAXPLAYERS];
+new bool:runoff_menu_trigger[TF2_MAXPLAYERS];
+new bool:threshold_trigger[TF2_MAXPLAYERS];
+new bool:threshold_menu_trigger[TF2_MAXPLAYERS];
 
 //Regex objects for chat triggers
 new Handle:runoff_regex = INVALID_HANDLE;
@@ -1726,7 +1726,7 @@ DoMapVote(client)
 
 	GetTrieString(trie, "flags", flags, sizeof(flags));
 
-	new clients[MAXPLAYERS+1];
+	new clients[TF2_MAXPLAYERS+1];
 	new numClients;
 	GetClientsWithFlags(flags, clients, sizeof(clients), numClients);
 

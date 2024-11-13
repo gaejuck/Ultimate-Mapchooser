@@ -84,7 +84,7 @@ public Action:VM_MapVote(duration, Handle:vote_items, const clients[], numClient
 
 	new bool:verboseLogs = cvar_logging != INVALID_HANDLE && GetConVarBool(cvar_logging);
 
-	decl clientArr[MAXPLAYERS+1];
+	decl clientArr[TF2_MAXPLAYERS+1];
 	new count = 0;
 	new client;
 
@@ -137,7 +137,7 @@ public Action:VM_GroupVote(duration, Handle:vote_items, const clients[], numClie
 
 	new bool:verboseLogs = cvar_logging != INVALID_HANDLE && GetConVarBool(cvar_logging);
 
-	decl clientArr[MAXPLAYERS+1];
+	decl clientArr[TF2_MAXPLAYERS+1];
 	new count = 0;
 	new client;
 
