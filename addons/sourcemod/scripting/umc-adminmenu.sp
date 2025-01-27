@@ -2608,7 +2608,10 @@ Handle:CreateMapMenu(MenuHandler:handler, const String:group[], bool:limits, cli
 		KvJumpToKey(umc_mapcycle, mapBuff);
 
 		//Get the name of the current map.
-		KvGetSectionName(umc_mapcycle, mapBuff, sizeof(mapBuff));
+		if (StrContains(mapBuff, ".ugc") == -1)
+		{
+			KvGetSectionName(umc_mapcycle, mapBuff, sizeof(mapBuff));
+		}
 		KvGetString(umc_mapcycle, ADMINMENU_ADMINFLAG_KEY, mAdminFlags, sizeof(mAdminFlags), gAdminFlags);
 
 		if (!ClientHasAdminFlags(client, mAdminFlags))

@@ -551,7 +551,10 @@ Handle:BuildNominationMenu(client, const String:cat[]=INVALID_GROUP)
 		}
 
 		//Get the name of the current map.
-		KvGetSectionName(map_kv, mapBuff, sizeof(mapBuff));
+		if (StrContains(mapBuff, ".ugc") == -1)
+		{
+			KvGetSectionName(map_kv, mapBuff, sizeof(mapBuff));
+		}
 
 		//Get the display string.
 		UMC_FormatDisplayString(display, sizeof(display), dispKV, mapBuff, groupBuff);

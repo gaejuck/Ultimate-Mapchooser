@@ -1216,7 +1216,7 @@ public Native_UMCSetNextMap(Handle:plugin, numParams)
 		GetNativeString(3, group, len+1);
 	}
 
-	if (!IsMapValid(map))
+	if (!IsMapValid(map) && StrContains(map, ".ugc") == -1)
 	{
 		LogError("SETMAP: Map %s is invalid!", map);
 		return;
@@ -1306,6 +1306,12 @@ public Native_UMCIsMapValid(Handle:plugin, numParams)
 	new bool:isNom = bool:GetNativeCell(4);
 	new bool:forMapChange = bool:GetNativeCell(5);
 	new result;
+
+	if (StrContains(map, ".ugc") != -1)
+	{
+		CloseHandle(kv);
+		return true;
+	}
 
 	if (!KvJumpToKey(kv, group))
 	{
@@ -3943,7 +3949,7 @@ bool:IsValidMapFromCat(Handle:kv, Handle:mapcycle, const String:map[], bool:isNo
 	KvGetSectionName(kv, catName, sizeof(catName));
 
 	//Return that the map is not valid if the map doesn't exist in the category.
-	if (!KvJumpToKey(kv, map))
+	if (!KvJumpToKey(kv, map) && StrContains(map, ".ugc") == -1)
 	{
 		return false;
 	}
@@ -3953,6 +3959,11 @@ bool:IsValidMapFromCat(Handle:kv, Handle:mapcycle, const String:map[], bool:isNo
 
 	//Rewind back to the category.
 	KvGoBack(kv);
+
+	if (StrContains(map, ".ugc") != -1)
+	{
+		result = true;
+	}
 
 	//Return the result.
 	return result;
@@ -3991,6 +4002,12 @@ bool:IsValidMap(Handle:kv, Handle:mapcycle, const String:groupName[], bool:isNom
 	}
 
 	KvRewind(mapcycle);
+
+	if (StrContains(mapName, ".ugc") != -1)
+	{
+		return true;
+	}
+
 	return false;
 }
 

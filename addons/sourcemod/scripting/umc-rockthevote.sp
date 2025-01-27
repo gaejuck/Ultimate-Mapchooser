@@ -807,7 +807,7 @@ public UMC_OnNextmapSet(Handle:kv, const String:map[], const String:group[], con
 	GetCurrentMap(sMap, sizeof(sMap));
 	GetMapDisplayName(sMap, sMap, sizeof(sMap));
 	
-	if(!StrContains(sMap, "mvm_"))
+	if(!StrContains(sMap, "mvm_") && rtv_completed)
 	{
 		ForceChangeInFive(map, "RTV");
 	}
