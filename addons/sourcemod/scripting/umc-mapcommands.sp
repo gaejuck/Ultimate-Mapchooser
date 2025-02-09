@@ -59,7 +59,7 @@ public OnConfigsExecuted()
 				KvGetString(kv, COMMAND_KEY, group_command, sizeof(group_command), "");
 			}
 
-			if (KvJumpToKey(kv, CurrentMap) && strlen(map_command) == 0)
+			if ((KvJumpToKey(kv, CurrentMap) || StrContains(CurrentMap, ".ugc") != -1) && strlen(map_command) == 0)
 			{
 				KvGetString(kv, COMMAND_KEY, map_command, sizeof(map_command), "");
 			}
