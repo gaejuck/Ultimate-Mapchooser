@@ -365,6 +365,10 @@ public OnPluginStart()
 		HookEventEx("arena_win_panel",        Event_RoundEndTF2); //TF2
 		HookEventEx("teamplay_restart_round", Event_RestartRound); //TF2
 		HookEventEx("mvm_mission_complete",   Event_MissionCompleteTF2); //TF2   
+		HookEventEx("mvm_wave_complete",      Event_WaveEndTF2); //TF2 
+		HookEventEx("mvm_wave_failed",        Event_WaveEndTF2); //TF2  
+		HookEventEx("teamplay_game_over",     Event_GameEndTF2); //TF2
+		HookEventEx("tf_game_over",           Event_GameEndTF2); //TF2 (mp_winlimit)
 		HookEventEx("cs_match_end_restart",   Event_RestartRound); //CS:GO
 		HookEventEx("round_win",              Event_RoundEnd); //Nuclear Dawn
 		HookEventEx("game_end",               Event_RoundEnd); //EmpiresMod
@@ -597,8 +601,45 @@ public Event_RoundEndTF2(Handle:evnt, const String:name[], bool:dontBroadcast)
 public Event_MissionCompleteTF2(Event event, const char[] name, bool dontBroadcast)
 {
 	LogUMCMessage("MvM mission complete triggered end of map vote.");
-	StartMapVote();
-	mvm_mission_end = true;
+	decl String:map[MAP_LENGTH];
+	if(GetNextMap(map, sizeof(map)))
+	{
+		ForceChangeInFive(map, "CORE");
+	}
+	else
+	{
+		StartMapVote();
+		mvm_mission_end = true;
+	}
+}
+
+public Event_WaveEndTF2(Event event, const char[] name, bool dontBroadcast)
+{
+	round_counter++;
+	if (vote_enabled)
+	{
+		CheckMaxRounds();
+	}
+}
+
+public Event_GameEndTF2(Event event, const char[] name, bool dontBroadcast)
+{
+	char map[MAP_LENGTH];
+	GetCurrentMap(map, sizeof(map));
+	GetMapDisplayName(map, map, sizeof(map));
+
+	if(!StrContains(map, "mvm_"))
+	{
+		int maxrounds = GetConVarInt(cvar_maxrounds);
+		int time;
+
+		if ((maxrounds > 0 && maxrounds <= round_counter) || (GetMapTimeLimit(time) && time && GetMapTimeLeft(time) && time < 0))
+		{
+			LogUMCMessage("MvM game over triggered end of map vote.");
+			GetNextMap(map, sizeof(map));
+			ForceChangeInFive(map, "CORE");
+		}
+	}
 }
 
 //Called when a round ends in ZPS. 

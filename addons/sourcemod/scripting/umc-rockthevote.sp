@@ -806,11 +806,6 @@ public UMC_OnNextmapSet(Handle:kv, const String:map[], const String:group[], con
 	char sMap[8];
 	GetCurrentMap(sMap, sizeof(sMap));
 	GetMapDisplayName(sMap, sMap, sizeof(sMap));
-	
-	if(!StrContains(sMap, "mvm_") && rtv_completed)
-	{
-		ForceChangeInFive(map, "RTV");
-	}
 }
 
 //Called when UMC requests that the mapcycle should be reloaded.
